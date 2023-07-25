@@ -8,6 +8,12 @@ use tokio::task::{JoinError, JoinHandle};
 
 use crate::Cancellable;
 
+/// Service handle that allows to await for the service to join after it has
+/// been cancelled.
+///
+/// Awaiting this future does not guarantee that the service will ever join. It
+/// the callers responsibility to ensure that the service either has been
+/// cancelled, or it will join on its own.
 #[pin_project]
 #[derive(Debug)]
 pub struct CancellableHandle<T>
