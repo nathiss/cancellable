@@ -1,5 +1,5 @@
 /// Result of a single iteration of the service loop.
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CancellationResult<T> {
     /// Indicates that the loop should continue and wraps value yielded by the
     /// finished iteration.
@@ -26,5 +26,11 @@ impl<T> CancellationResult<T> {
     /// ```
     pub fn item(t: impl Into<T>) -> Self {
         Self::Item(t.into())
+    }
+}
+
+impl<T> From<T> for CancellationResult<T> {
+    fn from(value: T) -> Self {
+        Self::Item(value)
     }
 }
