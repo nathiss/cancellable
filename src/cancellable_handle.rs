@@ -39,10 +39,7 @@ where
 
     fn poll(self: std::pin::Pin<&mut Self>, cx: &mut std::task::Context<'_>) -> Poll<Self::Output> {
         let this = self.project();
-        match this.join_handle.poll(cx) {
-            Poll::Ready(v) => Poll::Ready(v),
-            Poll::Pending => Poll::Pending,
-        }
+        this.join_handle.poll(cx)
     }
 }
 
