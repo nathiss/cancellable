@@ -1,7 +1,16 @@
 [package]
 name = "cancellable"
 version = "0.1.0"
+authors = ["Kamil Rusin <kamil.jakub.rusin@gmail.com>"]
 edition = "2021"
+description = "A Rust library providing a generic cancellable utility."
+readme = "README.md"
+homepage = "https://github.com/nathiss/cancellable"
+repository = "https://github.com/nathiss/cancellable"
+license = "MIT"
+keywords = ["tokio", "service", "cancellable"]
+categories = ["asynchronous"]
+include = ["/src", "LICENSE.txt"]
 
 [dependencies]
 async-trait = "0.1.71"
