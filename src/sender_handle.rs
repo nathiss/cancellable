@@ -79,7 +79,7 @@ pub trait SenderHandle {
     ///
     /// # Returns
     ///
-    /// Returns `Ok(())` if the operation succeeded. If it failed to send the
-    /// value it returns it back, wrapped as `Err(Self::Item)`.
+    /// Returns `Ok(())` if the operation succeeded. If it's failed to send the
+    /// value, it returns it back wrapped as `Err(Self::Item)`.
     async fn send(&mut self, item: Self::Item) -> Result<(), Self::Item>;
 }
