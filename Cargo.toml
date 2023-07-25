@@ -1,0 +1,15 @@
+[package]
+name = "cancellable"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-trait = "0.1.71"
+log = "0.4.19"
+pin-project = "1.1.2"
+tokio = { version = "1.29.1", default-features = false, features = ["rt", "macros"] }
+tokio-util = { version = "0.7.8", default-features = false }
+
+[dev-dependencies]
+anyhow = "1.0.71"
+tokio = { version = "1.29.1", default-features = false, features = ["rt", "macros", "time"] }
