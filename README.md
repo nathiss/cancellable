@@ -1,5 +1,10 @@
 # Cancellable
 
+[![ci-master](https://github.com/nathiss/cancellable/actions/workflows/ci-master.yaml/badge.svg)](https://github.com/nathiss/cancellable/actions/workflows/ci-master.yaml)
+[![Crates.io](https://img.shields.io/crates/v/cancellable)](https://crates.io/crates/cancellable)
+[![docs.rs](https://docs.rs/cancellable/badge.svg)](https://docs.rs/cancellable/)
+![Crates.io](https://img.shields.io/crates/l/cancellable)
+
 A Rust library providing a generic cancellable utility.
 
 ## Examples
