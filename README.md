@@ -7,6 +7,9 @@
 
 A Rust library providing a generic cancellable utility.
 
+The goal of this library is to provide a unified way of defining background
+services that are managed by the [`tokio`](https://tokio.rs/) runtime.
+
 ## Examples
 
 ```rust
