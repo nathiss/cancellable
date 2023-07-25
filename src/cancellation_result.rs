@@ -1,10 +1,29 @@
+/// Result of a single iteration of the service loop.
+#[derive(Debug)]
 pub enum CancellationResult<T> {
+    /// Indicates that the loop should continue and wraps value yielded by the
+    /// finished iteration.
     Item(T),
+
+    /// Indicates that the loop should continue.
     Continue,
+
+    /// Indicates that the loop should end.
     Break,
 }
 
 impl<T> CancellationResult<T> {
+    /// Constructs a new `CancellationResult::Item`.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// use cancellable::CancellationResult;
+    ///
+    /// fn construct_result() -> CancellationResult<String> {
+    ///     CancellationResult::item("foo")
+    /// }
+    /// ```
     pub fn item(t: impl Into<T>) -> Self {
         Self::Item(t.into())
     }
