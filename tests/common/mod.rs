@@ -45,7 +45,7 @@ impl Cancellable for MockCancellable {
     type Handle = Feeder;
     type Error = anyhow::Error;
 
-    async fn new_inner(&mut self) -> Self::Handle {
+    async fn new_handle(&mut self) -> Self::Handle {
         self.sender
             .take()
             .map(Feeder::new)

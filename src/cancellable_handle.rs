@@ -89,7 +89,7 @@ mod tests {
             Ok(CancellationResult::Continue)
         }
 
-        async fn new_inner(&mut self) -> Self::Handle {}
+        async fn new_handle(&mut self) -> Self::Handle {}
     }
 
     #[tokio::test]

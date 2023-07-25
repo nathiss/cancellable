@@ -15,7 +15,7 @@ pub enum CancellationResult<T> {
 impl<T> CancellationResult<T> {
     /// Constructs a new `CancellationResult::Item`.
     ///
-    /// ## Example
+    /// # Examples
     ///
     /// ```
     /// use cancellable::CancellationResult;
