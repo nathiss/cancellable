@@ -22,12 +22,17 @@ pub trait Cancellable {
     /// `Ok(CancellableResult::Break)` or `Err(Self::Error)`, then the service
     /// will complete.
     ///
+    /// See [CancellationResult::Break].
+    ///
     /// # Returns
     ///
     /// Returned value controls whether the work loop will continue. If the
     /// returned value is `Err(Self::Error)` or `Ok(CancellationResult::Break)`,
     /// then the work loop finishes. The method can optionally yield a value by
     /// returning [`CancellationResult::Item`].
+    ///
+    /// [CancellableResult::Break]: crate::CancellationResult#variant.Break
+    /// [`CancellationResult::Item`]: crate::CancellationResult#variant.Item
     async fn run(&mut self) -> Result<CancellationResult<Self::Result>, Self::Error>;
 
     /// Constructs a new handle for communicating with the service.
