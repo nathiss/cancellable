@@ -12,6 +12,8 @@ services that are managed by the [`tokio`](https://tokio.rs/) runtime.
 
 ## Examples
 
+For working examples see [`examples/`](./examples/) folder.
+
 ```rust
 use std::{error::Error, net::SocketAddr};
 
