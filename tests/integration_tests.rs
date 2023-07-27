@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use cancellable::{Cancellable, CancellationToken, SenderHandle};
+use cancellable::{Cancellable, CancellationToken};
 use tokio::{
     sync::mpsc::{error::SendError, unbounded_channel},
     time::timeout,

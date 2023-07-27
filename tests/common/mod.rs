@@ -1,4 +1,4 @@
-use cancellable::{Cancellable, CancellationResult, SenderHandle};
+use cancellable::{Cancellable, CancellationResult};
 use tokio::sync::mpsc::{error::SendError, unbounded_channel, UnboundedReceiver, UnboundedSender};
 
 #[derive(Debug)]
@@ -10,13 +10,8 @@ impl Feeder {
     pub(self) fn new(inner: UnboundedSender<i32>) -> Self {
         Self { inner }
     }
-}
 
-#[async_trait::async_trait]
-impl SenderHandle for Feeder {
-    type Item = i32;
-
-    async fn send(&mut self, item: Self::Item) -> Result<(), Self::Item> {
+    pub(crate) async fn send(&mut self, item: i32) -> Result<(), i32> {
         match self.inner.send(item) {
             Ok(()) => Ok(()),
             Err(SendError(item)) => Err(item),

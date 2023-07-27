@@ -1,6 +1,6 @@
 use std::{collections::VecDeque, error::Error};
 
-use cancellable::{async_trait, Cancellable, CancellationResult, CancellationToken, SenderHandle};
+use cancellable::{async_trait, Cancellable, CancellationResult, CancellationToken};
 use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver, UnboundedSender};
 
 #[derive(Debug)]
@@ -8,11 +8,8 @@ struct NumberSender {
     inner: UnboundedSender<i32>,
 }
 
-#[async_trait]
-impl SenderHandle for NumberSender {
-    type Item = i32;
-
-    async fn send(&mut self, item: Self::Item) -> Result<(), Self::Item> {
+impl NumberSender {
+    async fn send(&mut self, item: i32) -> Result<(), i32> {
         self.inner.send(item).map_err(|_| item)?;
         Ok(())
     }
