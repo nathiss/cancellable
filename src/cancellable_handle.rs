@@ -5,6 +5,7 @@ use std::{
 
 use pin_project::pin_project;
 use tokio::task::{JoinError, JoinHandle};
+use tokio_util::sync::CancellationToken;
 
 use crate::Cancellable;
 
@@ -22,6 +23,7 @@ where
 {
     #[pin]
     join_handle: JoinHandle<Result<(), <T as Cancellable>::Error>>,
+    cancellation_token: CancellationToken,
     inner: <T as Cancellable>::Handle,
 }
 
@@ -31,9 +33,22 @@ where
 {
     pub(crate) fn new(
         join_handle: JoinHandle<Result<(), <T as Cancellable>::Error>>,
+        cancellation_token: CancellationToken,
         inner: <T as Cancellable>::Handle,
     ) -> Self {
-        Self { join_handle, inner }
+        Self {
+            join_handle,
+            cancellation_token,
+            inner,
+        }
+    }
+
+    /// Cancels the service from which this handle has been spawned.
+    ///
+    /// When a service is cancelled it completes immediately. This operation is
+    /// not reversible.
+    pub fn cancel(&self) {
+        self.cancellation_token.cancel();
     }
 }
 
@@ -103,7 +118,7 @@ mod tests {
             cancellation_token_clone.cancel();
             Err(anyhow::anyhow!(""))
         });
-        let handle = CancellableHandle::<MockCancellable>::new(task, ());
+        let handle = CancellableHandle::<MockCancellable>::new(task, CancellationToken::new(), ());
 
         // Act
         drop(handle);
@@ -111,5 +126,20 @@ mod tests {
 
         // Assert
         assert!(!cancellation_token.is_cancelled());
+    }
+
+    #[tokio::test]
+    async fn should_cancel_token_when_call_cancel() {
+        // Arrange
+        let cancellation_token = CancellationToken::new();
+        let task = tokio::spawn(async { Ok(()) });
+        let handle =
+            CancellableHandle::<MockCancellable>::new(task, cancellation_token.child_token(), ());
+
+        // Act
+        cancellation_token.cancel();
+
+        // Assert
+        assert!(handle.cancellation_token.is_cancelled());
     }
 }

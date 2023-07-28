@@ -164,3 +164,18 @@ async fn should_complete_task_when_cancelled() -> Result<(), anyhow::Error> {
 
     Ok(())
 }
+
+#[tokio::test]
+async fn should_complete_when_cancelled_via_handle() -> Result<(), anyhow::Error> {
+    // Arrange
+    let cancellable = MockCancellable::new();
+    let handle = cancellable.spawn(CancellationToken::new()).await;
+
+    // Act
+    handle.cancel();
+
+    // Assert
+    handle.await??;
+
+    Ok(())
+}

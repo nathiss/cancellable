@@ -79,12 +79,17 @@ pub trait Cancellable {
         Self: Sized + Send + 'static,
         F: FnMut(Self::Result) -> Result<(), Self::Result> + Send + 'static,
     {
+        let inner_cancellable_token = CancellationToken::new();
+        let inner_cancellable_token_child = inner_cancellable_token.child_token();
         let inner = self.new_handle().await;
 
         let join_handle = tokio::spawn(async move {
             loop {
                 tokio::select! {
                     _ = cancellation_token.cancelled() => {
+                        break
+                    }
+                    _ = inner_cancellable_token_child.cancelled() => {
                         break
                     }
                     result = self.run() => {
@@ -105,7 +110,7 @@ pub trait Cancellable {
             Ok(())
         });
 
-        CancellableHandle::new(join_handle, inner)
+        CancellableHandle::new(join_handle, inner_cancellable_token, inner)
     }
 }
 
