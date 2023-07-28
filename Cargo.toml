@@ -1,6 +1,6 @@
 [package]
 name = "cancellable"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Kamil Rusin <kamil.jakub.rusin@gmail.com>"]
 edition = "2021"
 description = "A Rust library providing a generic cancellable utility."
