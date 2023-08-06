@@ -1,5 +1,5 @@
-//! This crate provides a way of defining an interface fo//!^r a background service.
-//! //!
+//! This crate provides a way of defining an interface for a background service.
+//!
 //! The main entrypoint of this create is [`cancellable::Cancellable`] trait. It
 //! is an [`async-trait`](https://docs.rs/async-trait/latest/async_trait/) that
 //! depends on [tokio](https://tokio.rs).
